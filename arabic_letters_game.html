@@ -2,166 +2,208 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مغامرة الأرنب مع الحروف العربية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>هيا نتعلم الأرقام! 🎈</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap');
+        :root {
+            --primary: #FF9A9E;
+            --secondary: #FECFEF;
+            --success: #A1C4FD;
+            --warning: #FBC2EB;
+            --text-dark: #4A4A4A;
+            --bg-color: #FDFAF6;
+            --btn-hover: #FF858A;
+        }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #e0f7fa;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
             margin: 0;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            color: #333;
+            min-height: 100vh;
+            text-align: center;
+            overflow-x: hidden;
         }
 
         #game-container {
-            background-color: #ffffff;
-            width: 90%;
-            max-width: 800px;
-            height: 90%;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-align: center;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px 20px;
             box-sizing: border-box;
-            border: 8px solid #ffb74d;
+            border: 5px dashed var(--secondary);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
+
+        h2 { 
+            color: var(--text-dark);
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
         }
 
         .screen {
             display: none;
-            width: 100%;
-            flex-direction: column;
-            align-items: center;
+            animation: fadeIn 0.5s ease;
         }
 
         .screen.active {
-            display: flex;
+            display: block;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            color: #ff9800;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 0px #fff, 4px 4px 0px #ffe0b2;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            color: #00838f;
-        }
-
-        .huge-emoji {
-            font-size: 8rem;
-            margin: 20px;
-            animation: bounce 2s infinite;
-        }
-
-        .display-item {
-            font-size: 7rem;
-            margin: 20px;
-            color: #e91e63;
-        }
-
-        .btn-large {
-            background-color: #4caf50;
+        .btn {
+            background-color: var(--primary);
             color: white;
             border: none;
-            border-radius: 20px;
-            padding: 20px 50px;
-            font-size: 2.5rem;
-            font-family: inherit;
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-size: 1.3rem;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 8px 0 #388e3c;
-            transition: transform 0.1s, box-shadow 0.1s;
-            margin-top: 20px;
+            margin: 8px;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+            width: 90%;
+            max-width: 300px;
         }
 
-        .btn-large:active {
-            transform: translateY(8px);
-            box-shadow: none;
+        .btn:hover, .btn:active {
+            transform: scale(1.05);
+            background-color: var(--btn-hover);
         }
 
-        .options-container {
+        .btn-option {
+            background-color: var(--success);
+            font-size: 2.2rem;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(161, 196, 253, 0.4);
+            margin: 5px;
+            padding: 0;
+        }
+
+        .btn-option:hover, .btn-option:active {
+            background-color: #8AB3FC;
+        }
+
+        .big-number {
+            font-size: 6rem;
+            color: var(--primary);
+            font-weight: 800;
+            margin: 10px 0;
+            line-height: 1;
+        }
+
+        .items-container {
+            font-size: 3rem;
+            margin: 15px 0;
+            min-height: 70px;
             display: flex;
-            gap: 20px;
-            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        /* تنسيقات نشاط البالونات */
+        .balloons-area {
+            display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            min-height: 90px;
         }
 
-        .option-card {
-            background-color: #bbdefb;
-            border: 6px solid #64b5f6;
-            border-radius: 20px;
-            width: 150px;
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 5rem;
+        .balloon-btn {
+            font-size: 3.5rem;
+            background: none;
+            border: none;
             cursor: pointer;
-            transition: transform 0.2s;
-            color: #1976d2;
+            transition: transform 0.1s;
+            padding: 0;
+            margin: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .option-card:hover {
-            transform: scale(1.1);
-            background-color: #90caf9;
+        .balloon-btn:active {
+            transform: scale(0.9);
         }
 
-        #feedback-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255,0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            z-index: 10;
-            border-radius: 20px;
+        .popped {
+            animation: popEffect 0.3s forwards;
+            pointer-events: none;
         }
 
-        .feedback-text {
-            font-size: 4rem;
-            font-weight: 900;
-            margin: 20px;
+        .feedback {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 15px 0;
+            min-height: 35px;
         }
 
-        .star {
-            font-size: 6rem;
-            color: #ffc107;
-            animation: spin 1s linear infinite;
-        }
+        .feedback.success { color: #4CAF50; animation: bounce 0.5s; }
+        .feedback.error { color: #FF5252; animation: shake 0.5s; }
 
-        .score-board {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.8rem;
-            background: #fff3e0;
-            padding: 10px 20px;
-            border-radius: 15px;
-            border: 3px solid #ffb74d;
-            font-weight: bold;
-        }
+        .hidden { display: none !important; }
 
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-7px);}
+        }
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            25% {transform: translateX(-5px);}
+            75% {transform: translateX(5px);}
+        }
+        @keyframes popEffect {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.8; }
+            100% { transform: scale(0); opacity: 0; }
         }
 
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
+        .navigation-btns { margin-top: 20px; display: flex; flex-direction: column; align-items: center; }
+
+        /* --- تحسينات الموبايل (Responsive Design) --- */
+        @media (max-width: 480px) {
+            #game-container {
+                padding: 20px 15px;
+                border-width: 3px;
+            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            p { font-size: 1.1rem; }
+            .big-number { font-size: 5rem; }
+            .btn { font-size: 1.2rem; padding: 12px 20px; }
+            .btn-option { width: 65px; height: 65px; font-size: 1.8rem; margin: 3px; }
+            .items-container { font-size: 2.5rem; }
+            .balloon-btn { font-size: 3rem; }
+            .feedback { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -170,164 +212,331 @@
     <div id="game-container">
         <!-- شاشة البداية -->
         <div id="start-screen" class="screen active">
-            <h1>مغامرة الأرنب</h1>
-            <div class="huge-emoji">🐰</div>
-            <h2>مع الحروف العربية</h2>
-            <button class="btn-large" onclick="startGame()">يلا نلعب!</button>
+            <h1>هيا نتعلم الأرقام! 🎈</h1>
+            <p style="color: #666;">أهلاً بك يا بطل! هل أنت مستعد لتعلم الأرقام من ١ إلى ٥؟</p>
+            <div class="navigation-btns">
+                <button class="btn" onclick="startGame()">ابدأ اللعب 🚀</button>
+            </div>
         </div>
 
-        <!-- شاشة اللعب -->
-        <div id="game-screen" class="screen">
-            <div class="score-board">النجوم: <span id="score">0</span> ⭐</div>
-            <h2 id="question-title">أين الحرف؟</h2>
-            <div id="display-area"></div>
-            <div id="options-area" class="options-container"></div>
+        <!-- النشاط الأول: تعرف على الرقم -->
+        <div id="activity1-screen" class="screen">
+            <h2>١. تعرّف على الرقم</h2>
+            <div id="a1-number" class="big-number">١</div>
+            <div id="a1-items" class="items-container">🍎</div>
+            <div class="navigation-btns">
+                <button class="btn" onclick="nextA1()">الرقم التالي ➡️</button>
+                <button class="btn hidden" id="btn-to-a2" onclick="showScreen('activity2-screen'); initActivity2();">النشاط التالي 🌟</button>
+            </div>
+        </div>
+
+        <!-- النشاط الثاني: اختر الرقم الصحيح -->
+        <div id="activity2-screen" class="screen">
+            <h2>٢. اختر الرقم الصحيح</h2>
+            <p>كم نجمة في الصورة؟</p>
+            <div id="a2-items" class="items-container"></div>
+            <div id="a2-options" style="display: flex; justify-content: center; gap: 10px;"></div>
+            <div id="a2-feedback" class="feedback"></div>
+            <div class="navigation-btns">
+                <button class="btn hidden" id="a2-next-btn" onclick="nextA2()">السؤال التالي ➡️</button>
+                <button class="btn hidden" id="btn-to-a3" onclick="showScreen('activity3-screen'); initActivity3();">النشاط التالي 🌟</button>
+            </div>
+        </div>
+
+        <!-- النشاط الثالث: عد الأشياء -->
+        <div id="activity3-screen" class="screen">
+            <h2>٣. عدّ الأشياء</h2>
+            <p>عدّ الكرات واضغط على الرقم الصحيح:</p>
+            <div id="a3-items" class="items-container"></div>
+            <div id="a3-options" style="display: flex; justify-content: center; gap: 10px;"></div>
+            <div id="a3-feedback" class="feedback"></div>
+            <div class="navigation-btns">
+                <button class="btn hidden" id="a3-next-btn" onclick="nextA3()">السؤال التالي ➡️</button>
+                <button class="btn hidden" id="btn-to-a4" onclick="showScreen('activity4-screen'); initActivity4();">النشاط التالي 🌟</button>
+            </div>
+        </div>
+
+        <!-- النشاط الرابع: فرقع البالونات (الجديد) -->
+        <div id="activity4-screen" class="screen">
+            <h2>٤. فرقع البالونات 🎈</h2>
+            <p id="a4-instruction" style="font-weight: bold; color: var(--primary);"></p>
+            <div id="a4-balloons-container" class="balloons-area"></div>
+            <div id="a4-feedback" class="feedback"></div>
+            <div class="navigation-btns">
+                <button class="btn hidden" id="a4-next-btn" onclick="nextA4()">السؤال التالي ➡️</button>
+                <button class="btn hidden" id="btn-finish" onclick="showScreen('end-screen')">إنهاء اللعبة 🏆</button>
+            </div>
         </div>
 
         <!-- شاشة النهاية -->
         <div id="end-screen" class="screen">
-            <h1>انتهت اللعبة!</h1>
-            <div class="huge-emoji">🏆</div>
-            <h2 id="final-score-text">أنت بطل رائع!</h2>
-            <button class="btn-large" onclick="location.reload()">العب مرة أخرى</button>
-        </div>
-
-        <!-- شاشة التشجيع (الإجابة) -->
-        <div id="feedback-overlay">
-            <div id="feedback-emoji" class="star">⭐</div>
-            <div id="feedback-message" class="feedback-text">برافو يا بطل!</div>
+            <h1>أنت بطل رائع! 🏆</h1>
+            <p>لقد تعلمت الأرقام بنجاح!</p>
+            <div style="font-size: 3.5rem; margin: 15px 0;">🎉🎈⭐</div>
+            <div class="navigation-btns">
+                <button class="btn" onclick="resetGame()">العب مرة أخرى 🔄</button>
+            </div>
         </div>
     </div>
 
-    <script>
-        const lettersData = [
-            { letter: 'أ', words: [{w: 'أسد', e: '🦁'}, {w: 'أرنب', e: '🐰'}] },
-            { letter: 'ب', words: [{w: 'بطة', e: '🦆'}, {w: 'باب', e: '🚪'}] },
-            { letter: 'ت', words: [{w: 'تفاحة', e: '🍎'}, {w: 'تمساح', e: '🐊'}] },
-            { letter: 'ث', words: [{w: 'ثعلب', e: '🦊'}, {w: 'ثوب', e: '👕'}] },
-            { letter: 'ج', words: [{w: 'جمل', e: '🐪'}, {w: 'جزر', e: '🥕'}] }
-        ];
+    <!-- المؤثرات الصوتية -->
+    <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
 
-        let score = 0;
-        let currentQuestion = 0;
-        const totalQuestions = 10;
-        let correctAnswer = '';
+    <script>
+        const arabicNumbers = { 1: '١', 2: '٢', 3: '٣', 4: '٤', 5: '٥' };
+        const emojis = ['🍎', '🚗', '⭐', '🎈', '🦋'];
+        const balls = '⚽';
+
+        let currentNumberA1 = 1;
+        let currentQuestionA2 = 0;
+        let currentQuestionA3 = 0;
+        let currentQuestionA4 = 0;
+        
+        let questionsA2 = [];
+        let questionsA3 = [];
+        let questionsA4 = [];
+        
+        let a4Target = 0;
+        let a4PoppedCount = 0;
+
+        function playSuccessSound() {
+            let sound = document.getElementById('success-sound');
+            sound.currentTime = 0;
+            sound.play().catch(e => console.log("الصوت يحتاج لتفاعل المستخدم أولاً"));
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
 
         function startGame() {
-            document.getElementById('start-screen').classList.remove('active');
-            document.getElementById('game-screen').classList.add('active');
-            score = 0;
-            currentQuestion = 0;
-            updateScore();
-            nextQuestion();
+            currentNumberA1 = 1;
+            showScreen('activity1-screen');
+            updateA1();
         }
 
-        function getRandomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
-
-        function generateOptions(correct) {
-            let options = [correct];
-            let pool = lettersData.filter(d => d.letter !== correct.letter);
-            pool = shuffle(pool);
-            options.push(pool[0]);
-            options.push(pool[1]);
-            return shuffle(options);
-        }
-
-        function nextQuestion() {
-            if (currentQuestion >= totalQuestions) {
-                endGame();
-                return;
-            }
-
-            const activities = [1, 2]; // 1: Image->Letter, 2: Letter->Image
-            const activityType = getRandomItem(activities);
-            const targetData = getRandomItem(lettersData);
-            const targetWord = getRandomItem(targetData.words);
+        // --- النشاط الأول ---
+        function updateA1() {
+            document.getElementById('a1-number').innerText = arabicNumbers[currentNumberA1];
             
-            const titleEl = document.getElementById('question-title');
-            const displayEl = document.getElementById('display-area');
-            const optionsEl = document.getElementById('options-area');
-            
-            displayEl.innerHTML = '';
-            optionsEl.innerHTML = '';
-
-            const optionsData = generateOptions(targetData);
-
-            if (activityType === 1) {
-                titleEl.innerText = `ما هو الحرف الأول لكلمة ${targetWord.w}؟`;
-                displayEl.innerHTML = `<div class="display-item">${targetWord.e}</div>`;
-                correctAnswer = targetData.letter;
-
-                optionsData.forEach(opt => {
-                    const btn = document.createElement('div');
-                    btn.className = 'option-card';
-                    btn.innerText = opt.letter;
-                    btn.onclick = () => checkAnswer(opt.letter === correctAnswer);
-                    optionsEl.appendChild(btn);
-                });
-
-            } else if (activityType === 2) {
-                titleEl.innerText = `أي صورة تبدأ بحرف (${targetData.letter})؟`;
-                displayEl.innerHTML = `<div class="display-item">${targetData.letter}</div>`;
-                correctAnswer = targetWord.e;
-
-                optionsData.forEach(opt => {
-                    const wordObj = getRandomItem(opt.words);
-                    const btn = document.createElement('div');
-                    btn.className = 'option-card';
-                    btn.innerText = wordObj.e;
-                    // Check if the clicked image belongs to the target letter
-                    btn.onclick = () => checkAnswer(wordObj.e === correctAnswer || opt.letter === targetData.letter);
-                    optionsEl.appendChild(btn);
-                });
+            // توزيع العناصر بشكل أفضل على الموبايل بدلاً من التكرار النصي البسيط
+            let itemsHTML = '';
+            for(let i=0; i<currentNumberA1; i++) {
+                itemsHTML += `<span>${emojis[0]}</span>`;
             }
-        }
-
-        function checkAnswer(isCorrect) {
-            const overlay = document.getElementById('feedback-overlay');
-            const msg = document.getElementById('feedback-message');
-            const emoji = document.getElementById('feedback-emoji');
-
-            overlay.style.display = 'flex';
-
-            if (isCorrect) {
-                score++;
-                updateScore();
-                emoji.innerText = '⭐';
-                emoji.style.animation = 'spin 1s linear infinite';
-                const successMsgs = ['برافو يا بطل!', 'شاطر جداً!', 'ممتاز!', 'رائع!'];
-                msg.innerText = getRandomItem(successMsgs);
-                msg.style.color = '#4caf50';
+            document.getElementById('a1-items').innerHTML = itemsHTML;
+            
+            if (currentNumberA1 === 5) {
+                document.querySelector('#activity1-screen .btn[onclick="nextA1()"]').classList.add('hidden');
+                document.getElementById('btn-to-a2').classList.remove('hidden');
             } else {
-                emoji.innerText = '❌';
-                emoji.style.animation = 'none';
-                msg.innerText = 'حاول مرة أخرى يا بطل!';
-                msg.style.color = '#f44336';
+                document.querySelector('#activity1-screen .btn[onclick="nextA1()"]').classList.remove('hidden');
+                document.getElementById('btn-to-a2').classList.add('hidden');
             }
+        }
 
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                if (isCorrect) {
-                    currentQuestion++;
-                    nextQuestion();
+        function nextA1() {
+            if (currentNumberA1 < 5) {
+                currentNumberA1++;
+                updateA1();
+            }
+        }
+
+        // --- دوال مساعدة ---
+        function generateQuestions() {
+            let nums = [1, 2, 3, 4, 5];
+            return nums.sort(() => Math.random() - 0.5); 
+        }
+
+        function generateOptions(correctAnswer) {
+            let options = [correctAnswer];
+            while(options.length < 3) {
+                let r = Math.floor(Math.random() * 5) + 1;
+                if(options.indexOf(r) === -1) options.push(r);
+            }
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        // --- النشاط الثاني ---
+        function initActivity2() {
+            questionsA2 = generateQuestions();
+            currentQuestionA2 = 0;
+            loadQuestionA2();
+        }
+
+        function loadQuestionA2() {
+            let correctNum = questionsA2[currentQuestionA2];
+            let itemsHTML = '';
+            for(let i=0; i<correctNum; i++) itemsHTML += `<span>⭐</span>`;
+            document.getElementById('a2-items').innerHTML = itemsHTML;
+            
+            let optionsDiv = document.getElementById('a2-options');
+            optionsDiv.innerHTML = '';
+            
+            let options = generateOptions(correctNum);
+            options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = arabicNumbers[opt];
+                btn.onclick = () => checkAnswerA2(opt, correctNum);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('a2-feedback').className = 'feedback';
+            document.getElementById('a2-feedback').innerText = '';
+            document.getElementById('a2-next-btn').classList.add('hidden');
+            document.getElementById('btn-to-a3').classList.add('hidden');
+        }
+
+        function checkAnswerA2(selected, correct) {
+            let feedback = document.getElementById('a2-feedback');
+            if (selected === correct) {
+                feedback.innerText = 'أحسنت! ⭐';
+                feedback.className = 'feedback success';
+                playSuccessSound();
+                disableOptions('a2-options');
+                
+                if (currentQuestionA2 < 4) {
+                    document.getElementById('a2-next-btn').classList.remove('hidden');
+                } else {
+                    document.getElementById('btn-to-a3').classList.remove('hidden');
                 }
-            }, 1500); // تقليل وقت الانتظار قليلاً ليناسب اللعب السريع
+            } else {
+                feedback.innerText = 'حاول مرة أخرى! 💪';
+                feedback.className = 'feedback error';
+            }
         }
 
-        function updateScore() {
-            document.getElementById('score').innerText = score;
+        function nextA2() {
+            currentQuestionA2++;
+            loadQuestionA2();
         }
 
-        function endGame() {
-            document.getElementById('game-screen').classList.remove('active');
-            document.getElementById('end-screen').classList.add('active');
-            document.getElementById('final-score-text').innerText = `جمعت ${score} نجوم من ${totalQuestions}! بطل حقيقي! ⭐`;
+        // --- النشاط الثالث ---
+        function initActivity3() {
+            questionsA3 = generateQuestions();
+            currentQuestionA3 = 0;
+            loadQuestionA3();
+        }
+
+        function loadQuestionA3() {
+            let correctNum = questionsA3[currentQuestionA3];
+            let itemsHTML = '';
+            for(let i=0; i<correctNum; i++) itemsHTML += `<span>${balls}</span>`;
+            document.getElementById('a3-items').innerHTML = itemsHTML;
+            
+            let optionsDiv = document.getElementById('a3-options');
+            optionsDiv.innerHTML = '';
+            
+            let options = generateOptions(correctNum); 
+            options.forEach(opt => {
+                let btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = arabicNumbers[opt];
+                btn.onclick = () => checkAnswerA3(opt, correctNum);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('a3-feedback').className = 'feedback';
+            document.getElementById('a3-feedback').innerText = '';
+            document.getElementById('a3-next-btn').classList.add('hidden');
+            document.getElementById('btn-to-a4').classList.add('hidden');
+        }
+
+        function checkAnswerA3(selected, correct) {
+            let feedback = document.getElementById('a3-feedback');
+            if (selected === correct) {
+                feedback.innerText = 'رائع جداً! ⭐';
+                feedback.className = 'feedback success';
+                playSuccessSound();
+                disableOptions('a3-options');
+                
+                if (currentQuestionA3 < 4) {
+                    document.getElementById('a3-next-btn').classList.remove('hidden');
+                } else {
+                    document.getElementById('btn-to-a4').classList.remove('hidden'); 
+                }
+            } else {
+                feedback.innerText = 'أنت تستطيع، حاول مجدداً!';
+                feedback.className = 'feedback error';
+            }
+        }
+
+        function nextA3() {
+            currentQuestionA3++;
+            loadQuestionA3();
+        }
+
+        // --- النشاط الرابع (البالونات) ---
+        function initActivity4() {
+            questionsA4 = generateQuestions();
+            currentQuestionA4 = 0;
+            loadQuestionA4();
+        }
+
+        function loadQuestionA4() {
+            a4Target = questionsA4[currentQuestionA4];
+            a4PoppedCount = 0;
+            
+            let instructionText = `اضغط لتفرقع ${arabicNumbers[a4Target]} بالونات!`;
+            document.getElementById('a4-instruction').innerText = instructionText;
+            
+            let container = document.getElementById('a4-balloons-container');
+            container.innerHTML = '';
+            
+            for(let i = 0; i < 5; i++) {
+                let b = document.createElement('button');
+                b.className = 'balloon-btn';
+                b.innerText = '🎈';
+                b.onclick = function() { popBalloon(this); };
+                container.appendChild(b);
+            }
+            
+            document.getElementById('a4-feedback').className = 'feedback';
+            document.getElementById('a4-feedback').innerText = '';
+            document.getElementById('a4-next-btn').classList.add('hidden');
+            document.getElementById('btn-finish').classList.add('hidden');
+        }
+
+        function popBalloon(btn) {
+            if (btn.classList.contains('popped') || a4PoppedCount >= a4Target) return;
+            
+            btn.innerText = '💥';
+            btn.classList.add('popped');
+            a4PoppedCount++;
+            
+            if (a4PoppedCount === a4Target) {
+                let feedback = document.getElementById('a4-feedback');
+                feedback.innerText = 'أحسنت! أحلى بالونات! 🎈';
+                feedback.className = 'feedback success';
+                playSuccessSound();
+                
+                if (currentQuestionA4 < 4) {
+                    document.getElementById('a4-next-btn').classList.remove('hidden');
+                } else {
+                    document.getElementById('btn-finish').classList.remove('hidden');
+                }
+            }
+        }
+
+        function nextA4() {
+            currentQuestionA4++;
+            loadQuestionA4();
+        }
+
+        // --- دوال عامة ---
+        function disableOptions(containerId) {
+            let btns = document.getElementById(containerId).getElementsByTagName('button');
+            for(let btn of btns) {
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.style.cursor = 'default';
+            }
+        }
+
+        function resetGame() {
+            showScreen('start-screen');
         }
     </script>
 </body>
